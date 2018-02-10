@@ -1,3 +1,23 @@
 This is where I will put the code for LREC paper:
 
 Welch, Charlie, Kummerfeld, Jonathan K, Feng, Song, & Mihalcea, Rada (2018). World Knowledge for Semantic Parsing with Abstract Meaning Representation. In 11th Language Resources and Evaluation Conference (LREC). 
+
+
+Commands for running CAMR
+
+To retrain the model:
+
+python amr_parsing.py -m train --amrfmt amr --verblist --smatcheval --model amr_model0 --feat ./feature/basic_abt_brown_feats.templates train.txt -d dev.txt > ./logs/train.log 2>&1 &
+
+To parse the test set:
+
+python amr_parsing.py -m parse --model amr_model0.m test-sentences.txt 2>logs/error.log
+
+To run basic SMATCH evaluation:
+
+python smatch_2.0.2/smatch.py -f test-sentences.txt.all.amr_model0.parsed gold_LDC2014T12 --pr
+
+To run detailed SMATCH:
+
+cd amr-evaluation
+./evaluation.sh ../test-sentences.txt.all.amr_model0.parsed ../gold_LDC2014T12
